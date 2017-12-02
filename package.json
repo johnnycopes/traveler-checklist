@@ -8,5 +8,9 @@
     "watch": "scss --watch scss/main.scss:css/main.css"
   },
   "author": "John Coppola",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^3.9.1",
+    "webpack-dev-server": "^2.9.5"
+  }
 }
