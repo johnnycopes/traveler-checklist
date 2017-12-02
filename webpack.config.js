@@ -22,16 +22,27 @@ let config = {
       },
       {
         test: /\.scss$/, // files ending with .scss
-        use: ExtractTextWebpackPlugin.extract({ // call our plugin with extract method
-          use: ['css-loader', 'sass-loader'], // use these loaders
-          fallback: 'style-loader' // fallback for any CSS not extracted
-        }) // end extraction
+        use: ['css-hot-loader'].concat(ExtractTextWebpackPlugin.extract({
+        
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader'],
+              
+        })),
       }
     ] // end rules
   },
   plugins: [
     new ExtractTextWebpackPlugin('styles.css') // call the ExtractTextWebpackPlugin and name our CSS file
-  ]
+    // new webpack.NamedModulesPlugin(),
+    // new webpack.HotModuleReplacementPlugin()
+  ],
+  devServer: {
+    contentBase: path.resolve(__dirname, './public'), // A directory or URL to serve HTML content from
+    historyApiFallback: true, // fallback to /index.html for SPA
+    inline: true,
+    open: true // open default browser on launch
+  },
+  devtool: 'eval-source-map' // for choosing a style of source map 
 };
 
 module.exports = config;
