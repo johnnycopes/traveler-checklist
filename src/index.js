@@ -1,5 +1,14 @@
-require('./scss/main.scss');
+// =============
+// JS
+// =============
 
-var name = 'john';
-console.log(`hello ${name}`);
-document.write(`hello ${name}`);
+require('./js/app.js');
+// import "./app";
+
+
+// =============
+// SCSS
+// =============
+
+require('./scss/main.scss');
+// import "../scss/main.scss";
