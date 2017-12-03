@@ -1,109 +1,152 @@
-const checklist = document.querySelector('.checklist');
+const categories = document.querySelectorAll('.category-name');
+const documents = document.querySelector('.documents');
+const clothing = document.querySelector('.clothing');
+const toiletries = document.querySelector('.toiletries');
+const technology = document.querySelector('.technology');
+
+// var categories = [documents, clothing, toiletries, technology];
+// for (let category of categories) {
+//   category.addEventListener('click', function() {
+//     category.classList.toggle('open');
+//   });
+// }
+
+for (let category of categories) {
+  category.addEventListener('click', function() {
+    console.log('hey');
+    this.classList.toggle('open');
+  });
+}
 
 var tasklistItems = [
   {
     name: 'toothbrush',
-    type: 'object',
+    category: 'toiletries',
     checked: false
   },
   {
     name: 'toothpaste',
-    type: 'object',
+    category: 'toiletries',
     checked: false
   },
   {
     name: 'floss',
-    type: 'object',
+    category: 'toiletries',
     checked: false
   },
   {
     name: 'soap',
-    type: 'object',
+    category: 'toiletries',
     checked: false
   },
   {
     name: 'shampoo',
-    type: 'object',
+    category: 'toiletries',
     checked: false
   },
   {
     name: 'face cream',
-    type: 'object',
+    category: 'toiletries',
     checked: false
   },
   {
     name: 'glasses cleaner',
-    type: 'object',
+    category: 'toiletries',
     checked: false
   },
   {
     name: 'razor',
-    type: 'object',
+    category: 'toiletries',
     checked: false
   },
   {
     name: 'ID',
-    type: 'object',
+    category: 'documents',
     checked: false
   },
   {
     name: 'athletic shoes',
-    type: 'object',
+    category: 'clothing',
     checked: false
   },
   {
     name: 'athletic shorts',
-    type: 'object',
+    category: 'clothing',
     checked: false
   },
   {
     name: 'nail clippers',
-    type: 'object',
+    category: 'toiletries',
     checked: false
   },
   {
     name: 'comb',
-    type: 'object',
+    category: 'toiletries',
     checked: false
   },
   {
     name: 'pomade',
-    type: 'object',
+    category: 'toiletries',
     checked: false
   },
   {
     name: 'underwear',
-    type: 'object',
+    category: 'clothing',
     checked: false
   },
   {
     name: 'pants',
-    type: 'object',
+    category: 'clothing',
     checked: false
   },
   {
     name: 'shorts',
-    type: 'object',
+    category: 'clothing',
     checked: false
   },
   {
     name: 'shirts',
-    type: 'object',
+    category: 'clothing',
     checked: false
   },
   {
     name: 'sweaters',
-    type: 'object',
+    category: 'clothing',
     checked: false
   },
   {
     name: 'raincoat',
-    type: 'object',
+    category: 'clothing',
+    checked: false
+  },
+  {
+    name: 'laptop',
+    category: 'technology',
+    checked: false
+  },
+  {
+    name: 'phone',
+    category: 'technology',
+    checked: false
+  },
+  {
+    name: 'chargers',
+    category: 'technology',
+    checked: false
+  },
+  {
+    name: 'USB cables',
+    category: 'technology',
+    checked: false
+  },
+  {
+    name: 'Kindle',
+    category: 'technology',
     checked: false
   }
 ];
 
-function populateChecklist() {
+function generateLists() {
   tasklistItems.forEach(item => {
     var node = document.createElement('div');
     var content = `
@@ -111,9 +154,24 @@ function populateChecklist() {
       <label class="item__name" for="${item.name}">${item.name}</label>
       <i class="fa fa-trash-o" aria-hidden="true"></i>
     `;
+    node.classList.add('item');
     node.innerHTML = content;
-    checklist.appendChild(node);
+
+    switch (item.category) {
+      case 'documents':
+        documents.appendChild(node);
+        break;
+      case 'clothing':
+        clothing.appendChild(node);
+        break;
+      case 'toiletries':
+        toiletries.appendChild(node);
+        break;
+      case 'technology':
+        technology.appendChild(node);
+        break;
+    }
   });
 }
 
-populateChecklist();
+generateLists();

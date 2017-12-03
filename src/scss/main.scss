@@ -1,9 +1,48 @@
-$red: #FF0000;
+@import url('https://fonts.googleapis.com/css?family=Arvo');
 
-body {
-  background: white;
+html {
+  font-size: 10px;
 }
 
-h1 {
+body {
+  display: grid;
+  grid-template-rows: 100px 1fr;
+  grid-template-columns: 15% 1fr 15%;
+  background: white;
+  font-family: 'Arvo', serif;
+  font-size: 2rem;
+}
+
+.title {
+  grid-row: 1;
+  grid-column: 2;
+  font-size: 5rem;
   color: cadetblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.list {
+  // something
+}
+
+.categories-list {
+  grid-row: 2;
+  grid-column: 2;
+}
+
+.category-name {
+  padding: 5rem;
+  font-size: 3rem;
+  background: salmon;
+  border-bottom: 1px solid white;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background: gold;
+  border-bottom: 1px solid white;
 }

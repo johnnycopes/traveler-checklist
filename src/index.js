@@ -10,5 +10,6 @@ require('./js/app.js');
 // SCSS
 // =============
 
+require('./scss/reset.scss');
 require('./scss/main.scss');
 // import "../scss/main.scss";
