@@ -1,20 +1,28 @@
-const categories = document.querySelectorAll('.category-name');
+const categoryNames = document.querySelectorAll('.category-name');
+const $categoryLists = document.querySelectorAll('.category-list');
+
 const documents = document.querySelector('.documents');
 const clothing = document.querySelector('.clothing');
 const toiletries = document.querySelector('.toiletries');
 const technology = document.querySelector('.technology');
 
-// var categories = [documents, clothing, toiletries, technology];
-// for (let category of categories) {
-//   category.addEventListener('click', function() {
-//     category.classList.toggle('open');
-//   });
-// }
+var categoryLists = {
+  documents,
+  clothing,
+  toiletries,
+  technology
+};
 
-for (let category of categories) {
-  category.addEventListener('click', function() {
-    console.log('hey');
-    this.classList.toggle('open');
+for (let categoryName of categoryNames) {
+  categoryName.addEventListener('click', function() {
+    let list = this.nextElementSibling;
+    list.classList.toggle('open');
+    if (list.style.maxHeight) {
+      list.style.maxHeight = null;
+    } 
+    else {
+      list.style.maxHeight = `${list.scrollHeight}px`;
+    }
   });
 }
 
@@ -146,8 +154,15 @@ var tasklistItems = [
   }
 ];
 
+generateLists();
+
+// ********************
+// ********************
+
 function generateLists() {
   tasklistItems.forEach(item => {
+    var list = categoryLists[item.category];
+    console.log(list);
     var node = document.createElement('div');
     var content = `
       <input type="checkbox" id="${item.name}" />
@@ -156,22 +171,10 @@ function generateLists() {
     `;
     node.classList.add('item');
     node.innerHTML = content;
-
-    switch (item.category) {
-      case 'documents':
-        documents.appendChild(node);
-        break;
-      case 'clothing':
-        clothing.appendChild(node);
-        break;
-      case 'toiletries':
-        toiletries.appendChild(node);
-        break;
-      case 'technology':
-        technology.appendChild(node);
-        break;
-    }
+    list.appendChild(node);
   });
 }
 
-generateLists();
+function appendItemToList(list, node) {
+  list.appendChild(node);
+}
