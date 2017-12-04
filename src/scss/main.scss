@@ -13,39 +13,56 @@ body {
   font-size: 2rem;
 }
 
-.list {
-  // something
-}
-
-.categories-list {
+.categories {
   grid-column: 2;
 }
 
 .category {
   border-bottom: 1px solid white;
+
+  &__name {
+    padding: 3rem;
+    font-size: 3rem;
+    background: salmon;
+    border-bottom: 1px solid white;
+    cursor: pointer;
+  }
+
+  &__list {
+    transition: 200ms all ease-out;
+    max-height: 0;
+    overflow: hidden;
+  }
 }
 
-.category-name {
-  padding: 3rem;
-  font-size: 3rem;
-  background: salmon;
-  border-bottom: 1px solid white;
-}
-
-.category-list {
-  transition: 200ms all ease-out;
-  max-height: 0;
-  overflow: hidden;
-}
 
 .item {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  background: gold;
+  text-align: center;
+  position: relative;
   border-bottom: 1px solid white;
+
+  &__name {
+    display: block;
+    padding: 2rem;
+  }
+
+  &__checkbox {
+    visibility: hidden;
+    opacity: 0;
+    left: -9999px;
+    position: absolute;
+  }
+
+  &__checkbox:checked ~ .item__name {
+    background: lightgreen;
+  }
 }
 
+.counter {
+  grid-column: 2;
+  background: gold;
+  padding: 3rem;
+}
 
 
 

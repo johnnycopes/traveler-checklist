@@ -9,27 +9,28 @@
 	<title>Traveler Checklist</title>
 </head>
 <body>
-	<ul class="list categories-list categories">
+	<ul class="list categories">
 		<li class="category">
-			<h3 class="category-name">Documents</h3>
-			<ul class="list category-list documents closed"></ul>
+			<h3 class="category__name">Documents</h3>
+			<ul class="list category__list documents"></ul>
 		</li>
 		<li class="category">
-			<h3 class="category-name">Clothing</h3>
-			<ul class="list category-list clothing closed"></ul>
+			<h3 class="category__name">Clothing</h3>
+			<ul class="list category__list clothing"></ul>
 		</li>
 		<li class="category">
-			<h3 class="category-name">Toiletries</h3>
-			<ul class="list category-list toiletries closed"></ul>
+			<h3 class="category__name">Toiletries</h3>
+			<ul class="list category__list toiletries"></ul>
 		</li>
 		<li class="category">
-			<h3 class="category-name">Technology</h3>
-			<ul class="list category-list technology closed"></ul>
+			<h3 class="category__name">Technology</h3>
+			<ul class="list category__list technology"></ul>
 		</li>
 	</ul>
 
-	<!-- <ul class="list unfinished"></ul> -->
-	<!-- <ul class="list finished"></ul> -->
+	<div class="counter">
+		<span class="counter__checked">0</span> / <span class="counter__total"></span>
+	</div>
 
 	<script src="bundle.js"></script>
 </body>
