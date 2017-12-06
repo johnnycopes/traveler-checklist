@@ -1,1 +1,164 @@
-body{background:#fff}h1{color:#ff0}
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+* {
+  box-sizing: border-box; }
+
+html {
+  font-size: 10px; }
+
+body {
+  display: grid;
+  grid-template-columns: 0 1fr 0;
+  min-height: 100vh;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 2rem; }
+
+.header {
+  grid-row: 1;
+  grid-column: 2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  z-index: 2;
+  background: white;
+  font-weight: 700;
+  font-size: 1.5rem; }
+  .header__controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    height: 40px; }
+  .header__list-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #c4c4c48c;
+    padding: 0 1rem;
+    height: 20px; }
+
+.categories-list {
+  padding-top: 60px;
+  grid-column: 2;
+  display: flex;
+  flex-direction: column; }
+  .categories-list #documents .category__name,
+  .categories-list #documents .category__toggle-form-btn {
+    background: #FFCA28; }
+  .categories-list #clothing .category__name,
+  .categories-list #clothing .category__toggle-form-btn {
+    background: #8FE5F7; }
+  .categories-list #toiletries .category__name,
+  .categories-list #toiletries .category__toggle-form-btn {
+    background: #8BC34A; }
+  .categories-list #electronics .category__name,
+  .categories-list #electronics .category__toggle-form-btn {
+    background: #FFF9C5; }
+  .categories-list #misc .category__name,
+  .categories-list #misc .category__toggle-form-btn {
+    background: #FF825C; }
+
+.category__name {
+  display: flex;
+  align-items: center;
+  padding-left: 3rem;
+  font-size: 3rem;
+  cursor: pointer;
+  position: relative; }
+
+.category__toggle-form-btn {
+  position: absolute;
+  padding: 1rem 2rem;
+  bottom: -20px;
+  left: 50%;
+  transform: translate(-50%, 20px);
+  z-index: 1; }
+
+.category__list-container {
+  transition: 200ms all ease-out;
+  max-height: 0;
+  overflow: hidden; }
+
+.category__list {
+  padding: 3rem; }
+
+.category__add-item {
+  transition: 200ms all ease-out;
+  max-height: 0;
+  overflow: hidden; }
+
+.item {
+  text-align: center;
+  position: relative; }
+  .item__name {
+    display: block;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    padding: 1rem;
+    word-break: break-all; }
+  .item__checkbox {
+    visibility: hidden;
+    opacity: 0;
+    left: -9999px;
+    position: absolute; }
+  .item__checkbox:checked ~ .item__name {
+    background: #c4c4c48c;
+    color: gray; }
+
+.hide {
+  display: none; }
+
+@media screen and (min-width: 480px) {
+  body {
+    display: grid;
+    grid-template-rows: 40px 1fr;
+    grid-template-columns: 15% 1fr 15%;
+    min-height: 100vh;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 2rem; } }

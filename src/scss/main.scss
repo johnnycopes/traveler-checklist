@@ -1,4 +1,14 @@
-@import url('https://fonts.googleapis.com/css?family=Arvo');
+$gold: #FFCA28;
+$cyan: #8FE5F7;
+$green: #8BC34A;
+$beige: #FFF9C5;
+$red: #FF825C;
+$lightgray: #c4c4c48c;
+$white: #FFF;
+
+* {
+  box-sizing: border-box;
+}
 
 html {
   font-size: 10px;
@@ -6,44 +16,187 @@ html {
 
 body {
   display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: 15% 1fr 15%;
-  background: white;
-  font-family: 'Arvo', serif;
+  grid-template-columns: 0 1fr 0;
+  min-height: 100vh;
+  font-family: 'Open Sans', sans-serif;
   font-size: 2rem;
 }
 
-.categories-list {
+.header {
+  grid-row: 1;
   grid-column: 2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  z-index: 3;
+  background: white;
+  font-weight: 700;
+  font-size: 1.5rem;
+
+  &__controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    height: 40px;
+  }
+
+  &__list-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $lightgray;
+    padding: 0 1rem;
+    height: 20px;
+  }
+}
+
+.categories-list {
+  padding-top: 60px;
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+
+  #documents {
+    .category__name,
+    .category__toggle-form-btn {
+      background: $gold;
+    }
+
+    .category__add-item-form::before {
+      background: lighten($gold, 20%);
+    }
+  }
+
+  #clothing {
+    .category__name,
+    .category__toggle-form-btn {
+      background: $cyan;
+    }
+
+    .category__add-item-form::before {
+      background: lighten($cyan, 15%);
+    }
+  }
+
+  #toiletries {
+    .category__name,
+    .category__toggle-form-btn {
+      background: $green;
+    }
+
+    .category__add-item-form::before {
+      background: lighten($green, 30%);
+    }
+  }
+
+  #electronics {
+    .category__name,
+    .category__toggle-form-btn {
+      background: $beige;
+    }
+
+    .category__add-item-form::before {
+      background: lighten($beige, 8%);
+    }
+  }
+
+  #misc {
+    .category__name,
+    .category__toggle-form-btn {
+      background: $red;
+    }
+
+    .category__add-item-form::before {
+      background: lighten($red, 20%);
+    }
+  }
 }
 
 .category {
-  border-bottom: 1px solid white;
-
   &__name {
-    padding: 3rem;
+    display: flex;
+    align-items: center;
+    padding-left: 3rem;
     font-size: 3rem;
-    background: salmon;
-    border-bottom: 1px solid white;
     cursor: pointer;
+    position: relative;
+  }
+
+  &__toggle-form-btn {
+    position: absolute;
+    padding: 1rem 2rem;
+    bottom: -20px;
+    left: 50%;
+    transform: translate(-50%, 20px);
+    z-index: 2;
+  }
+
+  &__drawer {
+    position: relative;
+    max-height: 0;
+    overflow: hidden;
+    transition: 200ms all ease-out;
   }
 
   &__list {
-    transition: 200ms all ease-out;
-    max-height: 0;
-    overflow: hidden;
+    padding: 3rem;
+  }
+
+  &__add-item-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.8;
+      z-index: -1;
+    }
+  }
+
+  &__add-item-input {
+    margin: 0 auto 2rem;
+    width: 70%;
+    max-width: 400px;
+    padding: 1rem 2rem;
+    font-size: 2rem;
+  }
+
+  &__add-item-btn {
+    border: none;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    width: 40%;
+    font-size: 2rem;
+    background: $green;
+    color: $white;
   }
 }
-
 
 .item {
   text-align: center;
   position: relative;
-  border-bottom: 1px solid white;
 
   &__name {
     display: block;
-    padding: 2rem;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    padding: 1rem;
+    word-break: break-all;
   }
 
   &__checkbox {
@@ -54,24 +207,27 @@ body {
   }
 
   &__checkbox:checked ~ .item__name {
-    background: lightgreen;
+    background: $lightgray;
+    color: gray;
   }
-}
 
-.counter {
-  grid-column: 2;
-  background: gold;
-  padding: 3rem;
 }
-
 
 
 // utility
 
-.open {
-  background: orange;
-}
-
 .hide {
   display: none;
+}
+
+.blur {
+  filter: blur(2px);
+}
+
+@media screen and (min-width: 480px) {
+
+  body {
+    grid-template-columns: 15% 1fr 15%;
+  }  
+
 }

@@ -1,3 +1,10 @@
+// IDEA: save categories' elements in an object on creation that can later be referenced
+// IDEA: generate categories' markup in JS so it can be edited in one place
+// TODO: make triangles on categories
+// TODO: scroll to top of category when clicked
+// TODO: set min-height of list to be screen height when opened
+// TODO: add drag and drop rearrangement
+
 var helpers = {
   generateUniqueID: function uuidv4() {
     return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
@@ -15,14 +22,17 @@ App.init();
 // ********************
 
 function setUpUI() {
+  var header;
   var counterChecked;
   var counterTotal;
+  var categoriesList;
   var documentsList;
   var clothingList;
   var toiletriesList;
   var electronicsList;
   var miscList;
   var categories;
+  var categoryNames;
   var addBtns;
   var categoryListLookup;
 
@@ -37,9 +47,11 @@ function setUpUI() {
   // ********************
 
   function initUI() {
+    header = document.querySelector('.header');
     counterChecked = document.querySelector('.counter__checked');
     counterTotal = document.querySelector('.counter__total');
 
+    categoriesList = document.querySelector('.categories-list');
     documentsList = document.querySelector('#documents .category__list');
     clothingList = document.querySelector('#clothing .category__list');
     toiletriesList = document.querySelector('#toiletries .category__list');
@@ -47,33 +59,33 @@ function setUpUI() {
     miscList = document.querySelector('#misc .category__list');
 
     categories = document.querySelectorAll('.category');
+    categoryNames = document.querySelectorAll('.category__name');
     addBtns = document.querySelectorAll('.category__toggle-form-btn');
-    categoryListLookup = {
-      documents: documentsList,
-      clothing: clothingList,
-      toiletries: toiletriesList,
-      electronics: electronicsList,
-      misc: miscList
-    };
 
-    _generateCategories();
+    _initCategories();
+    _setHeights();
+    window.addEventListener('resize', _setHeights);
   }
 
-  function _generateCategories() {
+  function _initCategories() {
     categories.forEach(category => {
       var category = category.id;
       var name = document.querySelector(`#${category} .category__name`);
+      var drawer = document.querySelector(`#${category} .category__drawer`);
       var list = document.querySelector(`#${category} .category__list`);
       var toggleFormBtn = document.querySelector(`#${category} .category__toggle-form-btn`);
       var addItemForm = document.querySelector(`#${category} .category__add-item-form`);
       var addItemInput = document.querySelector(`#${category} .category__add-item-input`);
+
       name.addEventListener('click', function() {
-        _toggleCategoryList(list);
+        _toggleElement(drawer);
+        toggleFormBtn.classList.toggle('hide');
       });
-      toggleFormBtn.addEventListener('click', function() {
-        alert('make this toggle the form!');
+      toggleFormBtn.addEventListener('click', function(event) {
+        event.stopPropagation();
+        addItemForm.classList.toggle('hide');
+        list.classList.toggle('blur');
       });
-      addItemInput.value = 'hey';
       addItemForm.addEventListener('submit', function(event) {
         event.preventDefault();
         var item = {
@@ -86,18 +98,18 @@ function setUpUI() {
     });
   }
 
-  function _toggleCategoryList(list) {
-    list.classList.toggle('open');
-    if (list.style.maxHeight) {
-      list.style.maxHeight = null;
+  function _toggleElement(element) {
+    element.classList.toggle('open');
+    if (element.style.maxHeight) {
+      element.style.maxHeight = null;
     } 
     else {
-      list.style.maxHeight = `${list.scrollHeight}px`;
+      element.style.maxHeight = `${element.scrollHeight}px`;
     }
   }
 
   function createItemAndAddToList(item) {
-    var list = categoryListLookup[item.category];
+    // create item
     var node = document.createElement('div');
     var checkedAttr = item.completed ? 'checked' : '';
     var content = `
@@ -107,9 +119,13 @@ function setUpUI() {
     node.classList.add('item');
     node.innerHTML = content;
     node.addEventListener('change', _notifyCounter);
-    list.appendChild(node);
-    if (list.classList.contains('open')) {
-      list.style.maxHeight = `${list.scrollHeight}px`;
+
+    // add to list
+    var drawer = document.querySelector(`#${item.category} .category__drawer`);
+    var list = document.querySelector(`#${item.category} .category__list`);
+    list.prepend(node);
+    if (drawer.classList.contains('open')) {
+      drawer.style.maxHeight = `${list.scrollHeight}px`;
     }
   }
 
@@ -122,12 +138,26 @@ function setUpUI() {
     counterChecked.innerText = counter.checked;
     counterTotal.innerText = counter.total;
   }
+
+  function _setHeights() {
+    var categoriesListHeight = window.innerHeight - 60;
+    var categoryHeight = categoriesListHeight / categories.length;
+    categoryNames.forEach(name => {
+      name.style.height = `${categoryHeight}px`;
+    });
+  }
 }
 
 // ********************
 
 function setUpApp(UI) {
   var tasklistItems = [
+    {
+      uniqueID: 0,
+      name: 'fake item',
+      category: 'misc',
+      completed: false
+    },
     {
       uniqueID: 1,
       name: 'toothbrush',
@@ -311,7 +341,7 @@ function setUpApp(UI) {
       category: item.category,
       completed: false
     };
-    tasklistItems.push(item);
+    tasklistItems.unshift(item);
     UI.createItemAndAddToList(item);
     updateCounter();
   }

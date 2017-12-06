@@ -4,70 +4,88 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 	<link rel="stylesheet" href="styles.css">
 	<title>Traveler Checklist</title>
 </head>
 <body>
-	<div class="counter">
-		<span class="counter__checked"></span> / <span class="counter__total"></span>
+	<div class="header">
+		<div class="header__controls">
+			<i class="fa fa-bars"></i>
+			<div class="header__progress-bar">===============</div>
+			<div class="counter">
+				<span class="counter__checked"></span> / <span class="counter__total"></span>
+			</div>
+		</div>
+		<div class="header__list-name">(List name)</div>
 	</div>
 
-	<ul class="list categories-list">
+	<ul class="categories-list">
 		<li id="documents" class="category">
-			<h3 class="category__name">Documents</h3>
-			<i class="category__toggle-form-btn fa fa-plus"></i>
-			<div class="category__add-item">
-				<form class="category__add-item-form">
-					<input class="category__add-item-input" type="text" />
+			<h3 class="category__name">
+				documents
+				<i class="category__toggle-form-btn hide">+</i>
+			</h3>
+			<div class="category__drawer">
+				<form class="category__add-item-form hide">
+					<input class="category__add-item-input" type="text" placeholder="item name" />
 					<button class="category__add-item-btn" type="submit">add</button>
 				</form>
+				<ul class="list category__list"></ul>
 			</div>
-			<ul class="list category__list"></ul>
 		</li>
 		<li id="clothing" class="category">
-			<h3 class="category__name">Clothing</h3>
-			<i class="category__toggle-form-btn fa fa-plus"></i>
-			<div class="category__add-item hide">
-				<form class="category__add-item-form">
-					<input class="category__add-item-input" type="text" />
+			<h3 class="category__name">
+				clothing
+				<i class="category__toggle-form-btn hide">+</i>
+			</h3>
+			<div class="category__drawer">
+				<form class="category__add-item-form hide">
+					<input class="category__add-item-input" type="text" placeholder="item name" />
 					<button class="category__add-item-btn" type="submit">add</button>
 				</form>
+				<ul class="list category__list"></ul>
 			</div>
-			<ul class="list category__list"></ul>
 		</li>
 		<li id="toiletries" class="category">
-			<h3 class="category__name">Toiletries</h3>
-			<i class="category__toggle-form-btn fa fa-plus"></i>
-			<div class="category__add-item hide">
-				<form class="category__add-item-form">
-					<input class="category__add-item-input" type="text" />
+			<h3 class="category__name">
+				toiletries
+				<i class="category__toggle-form-btn hide">+</i>
+			</h3>
+			<div class="category__drawer">
+				<form class="category__add-item-form hide">
+					<input class="category__add-item-input" type="text" placeholder="item name" />
 					<button class="category__add-item-btn" type="submit">add</button>
 				</form>
+				<ul class="category__list"></ul>
 			</div>
-			<ul class="list category__list"></ul>
 		</li>
 		<li id="electronics" class="category">
-			<h3 class="category__name">Electronics</h3>
-			<i class="category__toggle-form-btn fa fa-plus"></i>
-			<div class="category__add-item hide">
-				<form class="category__add-item-form">
-					<input class="category__add-item-input" type="text" />
+			<h3 class="category__name">
+				electronics
+				<i class="category__toggle-form-btn hide">+</i>
+			</h3>
+			<div class="category__drawer">
+				<form class="category__add-item-form hide">
+					<input class="category__add-item-input" type="text" placeholder="item name" />
 					<button class="category__add-item-btn" type="submit">add</button>
 				</form>
+				<ul class="list category__list"></ul>
 			</div>
-			<ul class="list category__list"></ul>
 		</li>
 		<li id="misc" class="category">
-			<h3 class="category__name">Misc</h3>
-			<i class="category__toggle-form-btn fa fa-plus"></i>
-			<div class="category__add-item hide">
-				<form class="category__add-item-form">
-					<input class="category__add-item-input" type="text" />
+			<h3 class="category__name">
+				misc
+				<i class="category__toggle-form-btn hide">+</i>
+			</h3>
+			<div class="category__drawer">
+				<form class="category__add-item-form hide">
+					<input class="category__add-item-input" type="text" placeholder="item name" />
 					<button class="category__add-item-btn" type="submit">add</button>
 				</form>
+				<ul class="list category__list"></ul>
 			</div>
-			<ul class="list category__list"></ul>
 		</li>
 	</ul>
 
