@@ -1,5 +1,4 @@
 // IDEA: save categories' elements in an object on creation that can later be referenced
-// IDEA: generate categories' markup in JS so it can be edited in one place
 // TODO: make triangles on categories
 // TODO: scroll to top of category when clicked
 // TODO: set min-height of list to be screen height when opened
@@ -26,18 +25,11 @@ function setUpUI() {
   var counterChecked;
   var counterTotal;
   var categoriesList;
-  var documentsList;
-  var clothingList;
-  var toiletriesList;
-  var electronicsList;
-  var miscList;
-  var categories;
   var categoryNames;
-  var addBtns;
-  var categoryListLookup;
 
   var publicAPI = {
     init: initUI,
+    createCategories,
     createItemAndAddToList,
     refreshCounter
   }
@@ -50,51 +42,70 @@ function setUpUI() {
     header = document.querySelector('.header');
     counterChecked = document.querySelector('.counter__checked');
     counterTotal = document.querySelector('.counter__total');
-
     categoriesList = document.querySelector('.categories-list');
-    documentsList = document.querySelector('#documents .category__list');
-    clothingList = document.querySelector('#clothing .category__list');
-    toiletriesList = document.querySelector('#toiletries .category__list');
-    electronicsList = document.querySelector('#electronics .category__list');
-    miscList = document.querySelector('#misc .category__list');
-
-    categories = document.querySelectorAll('.category');
-    categoryNames = document.querySelectorAll('.category__name');
-    addBtns = document.querySelectorAll('.category__toggle-form-btn');
-
-    _initCategories();
-    _setHeights();
-    window.addEventListener('resize', _setHeights);
   }
 
-  function _initCategories() {
+  function createCategories(categories) {
     categories.forEach(category => {
-      var category = category.id;
-      var name = document.querySelector(`#${category} .category__name`);
-      var drawer = document.querySelector(`#${category} .category__drawer`);
-      var list = document.querySelector(`#${category} .category__list`);
-      var toggleFormBtn = document.querySelector(`#${category} .category__toggle-form-btn`);
-      var addItemForm = document.querySelector(`#${category} .category__add-item-form`);
-      var addItemInput = document.querySelector(`#${category} .category__add-item-input`);
+      _createCategoryAndAddToList(category);
+    });
 
-      name.addEventListener('click', function() {
-        _toggleElement(drawer);
-        toggleFormBtn.classList.toggle('hide');
-      });
-      toggleFormBtn.addEventListener('click', function(event) {
-        event.stopPropagation();
-        addItemForm.classList.toggle('hide');
-        list.classList.toggle('blur');
-      });
-      addItemForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        var item = {
-          name: addItemInput.value,
-          category
-        };
-        App.createItemAndAddToList(item);
-        addItemInput.value = '';
-      });
+    // after category lists are created, set their names' heights dynamically
+    categoryNames = document.querySelectorAll('.category__name');
+    _setCategoryNameHeights();
+    window.addEventListener('resize', _setCategoryNameHeights);
+  }
+
+  function _createCategoryAndAddToList(category) {
+    // create item
+    var node = document.createElement('li');
+    var content = `
+      <h3 class="category__name">
+        ${category.name}
+        <i class="category__toggle-form-btn hide">+</i>
+      </h3>
+      <div class="category__drawer">
+        <form class="category__add-item-form hide">
+          <input class="category__add-item-input" type="text" placeholder="item name" />
+          <button class="category__add-item-btn" type="submit">add</button>
+        </form>
+        <ul class="list category__list"></ul>
+      </div>
+    `;
+    node.setAttribute('id', category.name);
+    node.classList.add('category');
+    node.innerHTML = content;
+
+    // add to list and attach event handlers
+    categoriesList.append(node);
+    _attachCategoryEventListeners(category.name);
+  }
+
+  function _attachCategoryEventListeners(category) {
+    var name = document.querySelector(`#${category} .category__name`);
+    var drawer = document.querySelector(`#${category} .category__drawer`);
+    var list = document.querySelector(`#${category} .category__list`);
+    var toggleFormBtn = document.querySelector(`#${category} .category__toggle-form-btn`);
+    var addItemForm = document.querySelector(`#${category} .category__add-item-form`);
+    var addItemInput = document.querySelector(`#${category} .category__add-item-input`);
+
+    name.addEventListener('click', function() {
+      _toggleElement(drawer);
+      toggleFormBtn.classList.toggle('hide');
+    });
+    toggleFormBtn.addEventListener('click', function(event) {
+      event.stopPropagation();
+      addItemForm.classList.toggle('hide');
+      list.classList.toggle('blur');
+    });
+    addItemForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      var item = {
+        name: addItemInput.value,
+        category
+      };
+      App.createItemAndAddToList(item);
+      addItemInput.value = '';
     });
   }
 
@@ -118,15 +129,15 @@ function setUpUI() {
     `;
     node.classList.add('item');
     node.innerHTML = content;
-    node.addEventListener('change', _notifyCounter);
 
-    // add to list
+    // add to list and attach event handlers
     var drawer = document.querySelector(`#${item.category} .category__drawer`);
     var list = document.querySelector(`#${item.category} .category__list`);
     list.prepend(node);
     if (drawer.classList.contains('open')) {
       drawer.style.maxHeight = `${list.scrollHeight}px`;
     }
+    node.addEventListener('change', _notifyCounter);    
   }
 
   function _notifyCounter() {
@@ -139,11 +150,11 @@ function setUpUI() {
     counterTotal.innerText = counter.total;
   }
 
-  function _setHeights() {
-    var categoriesListHeight = window.innerHeight - 60;
-    var categoryHeight = categoriesListHeight / categories.length;
+  function _setCategoryNameHeights() {
+    var allottedCategoriesListHeight = window.innerHeight - 60;
+    var categoryNameHeight = allottedCategoriesListHeight / categoryNames.length;
     categoryNames.forEach(name => {
-      name.style.height = `${categoryHeight}px`;
+      name.style.height = `${categoryNameHeight}px`;
     });
   }
 }
@@ -151,7 +162,29 @@ function setUpUI() {
 // ********************
 
 function setUpApp(UI) {
-  var tasklistItems = [
+  var categories = [
+    {
+      name: 'documents',
+      icon: ''
+    },
+    {
+      name: 'clothing',
+      icon: ''
+    },
+    {
+      name: 'toiletries',
+      icon: ''
+    },
+    {
+      name: 'electronics',
+      icon: ''
+    },
+    {
+      name: 'misc',
+      icon: ''
+    }
+  ];
+  var listItems = [
     {
       uniqueID: 0,
       name: 'fake item',
@@ -311,7 +344,7 @@ function setUpApp(UI) {
   ];
   var counter = {
     checked: 0,
-    total: tasklistItems.length
+    total: listItems.length
   };
 
   var publicAPI = {
@@ -325,12 +358,15 @@ function setUpApp(UI) {
   // ********************
 
   function initApp() {
-    tasklistItems.forEach(item => {
+    UI.createCategories(categories);
+
+    listItems.forEach(item => {
       if (item.completed) {
         counter.checked++;
       }
       UI.createItemAndAddToList(item);
     });
+
     UI.refreshCounter(counter);
   }
 
@@ -341,7 +377,7 @@ function setUpApp(UI) {
       category: item.category,
       completed: false
     };
-    tasklistItems.unshift(item);
+    listItems.unshift(item);
     UI.createItemAndAddToList(item);
     updateCounter();
   }
@@ -350,8 +386,8 @@ function setUpApp(UI) {
     if (arguments.length > 0) {
       checkboxValue ? counter.checked++ : counter.checked--;
     }
-    if (counter.total !== tasklistItems.length) {
-      counter.total = tasklistItems.length;
+    if (counter.total !== listItems.length) {
+      counter.total = listItems.length;
     }
     UI.refreshCounter(counter);
   }
