@@ -3,11 +3,17 @@
 // TODO: set min-height of list to be screen height when opened
 // TODO: add drag and drop rearrangement
 
+// general idea: make a huge, fixed max-height to animate but set the min-height of the
+// category lists dynamically
+
 var helpers = {
   generateUniqueID: function uuidv4() {
     return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
       (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
     )
+  },
+  returnBiggerNum(a, b) {
+    return a > b ? a : b;
   }
 };
 
@@ -25,6 +31,7 @@ function setUpUI() {
   var counterTotal;
   var categoriesList;
   var categoryNames;
+  var categoryLists;
 
   var publicAPI = {
     init: initUI,
@@ -49,10 +56,11 @@ function setUpUI() {
       _createCategoryAndAddToList(category);
     });
 
-    // after category lists are created, set their names' heights dynamically
+    // after category lists are created, set their elements' heights dynamically
     categoryNames = document.querySelectorAll('.category__name');
-    _setCategoryNameHeights();
-    window.addEventListener('resize', _setCategoryNameHeights);
+    categoryLists = document.querySelectorAll('.category__list');
+    _setHeights();
+    window.addEventListener('resize', _setHeights);
   }
 
   function _createCategoryAndAddToList(category) {
@@ -64,7 +72,7 @@ function setUpUI() {
         <i class="category__toggle-form-btn hide">+</i>
       </h3>
       <div class="category__drawer">
-        <form class="category__add-item-form">
+        <form class="category__add-item-form category__add-item-form--hidden">
           <input class="category__add-item-input" type="text" placeholder="item name" />
           <button class="category__add-item-btn" type="submit">add</button>
         </form>
@@ -94,7 +102,7 @@ function setUpUI() {
     });
     toggleFormBtn.addEventListener('click', function(event) {
       event.stopPropagation();
-      addItemForm.classList.toggle('reveal-form');
+      addItemForm.classList.toggle('category__add-item-form--hidden');
       list.classList.toggle('blur');
       addItemInput.focus();
     });
@@ -107,35 +115,6 @@ function setUpUI() {
       App.createItemAndAddToList(item);
       addItemInput.value = '';
     });
-  }
-
-  function _toggleDrawer(drawer) {
-    drawer.classList.toggle('open');
-
-
-    // console.log(window.scrollY);
-    // console.log(drawer.getBoundingClientRect());
-    // console.log(name);
-    // var drawerHeight = window.innerHeight - name.scrollHeight - header.scrollHeight;
-    // if (drawer.classList.contains('open')) {
-    //   var drawerPosition = drawer.getBoundingClientRect().top;
-    //   window.scrollTo(100, 100);
-    // }
-    if (drawer.style.maxHeight) {
-      drawer.style.maxHeight = null;
-    } 
-    else {
-      drawer.style.maxHeight = `${drawer.scrollHeight}px`;
-      // setTimeout(function() {
-      //   var name = drawer.previousElementSibling;
-      //   var namePosition = name.getBoundingClientRect().top - header.scrollHeight;
-      //   window.scroll({
-      //     top: namePosition,
-      //     left: 0,
-      //     behavior: 'smooth'
-      //   });
-      // }, 300);
-    }
   }
 
   function createItemAndAddToList(item) {
@@ -169,12 +148,38 @@ function setUpUI() {
     counterTotal.innerText = counter.total;
   }
 
-  function _setCategoryNameHeights() {
-    var allottedCategoriesListHeight = window.innerHeight - 60;
-    var categoryNameHeight = allottedCategoriesListHeight / categoryNames.length;
+  function _setHeights() {
+    var categoriesListHeight = window.innerHeight - header.scrollHeight;
+    var categoryNameHeight = categoriesListHeight / categoryNames.length;
+
     categoryNames.forEach(name => {
       name.style.height = `${categoryNameHeight}px`;
     });
+
+    categoryLists.forEach(list => {
+      list.style.minHeight = `${categoriesListHeight - categoryNameHeight}px`;
+    });
+  }
+
+  function _toggleDrawer(drawer) {
+    if (drawer.style.maxHeight) {
+      drawer.style.maxHeight = null;
+      drawer.style.maxHeight = null;
+    }
+    else {
+      drawer.style.maxHeight = `${drawer.scrollHeight}px`;
+
+      // scroll to correct tab
+      setTimeout(function() {
+        var name = drawer.previousElementSibling;
+        var namePosition = name.getBoundingClientRect().top - header.scrollHeight;
+        window.scroll({
+          top: namePosition,
+          left: 0,
+          behavior: 'smooth'
+        });
+      }, 300);
+    }
   }
 }
 
