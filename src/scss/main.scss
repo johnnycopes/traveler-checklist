@@ -66,8 +66,11 @@ body {
   flex-direction: column;
 
   #documents {
-    .category__name,
-    .category__toggle-form-btn {
+    .category__triangle::after {
+      border-top-color: $gold;
+    }
+
+    .category__name {
       background: $gold;
     }
 
@@ -77,8 +80,11 @@ body {
   }
 
   #clothing {
-    .category__name,
-    .category__toggle-form-btn {
+    .category__triangle::after {
+      border-top-color: $cyan;
+    }
+
+    .category__name {
       background: $cyan;
     }
 
@@ -88,8 +94,11 @@ body {
   }
 
   #toiletries {
-    .category__name,
-    .category__toggle-form-btn {
+    .category__triangle::after {
+      border-top-color: $green;
+    }
+
+    .category__name {
       background: $green;
     }
 
@@ -99,8 +108,11 @@ body {
   }
 
   #electronics {
-    .category__name,
-    .category__toggle-form-btn {
+    .category__triangle::after {
+      border-top-color: $beige;
+    }
+
+    .category__name {
       background: $beige;
     }
 
@@ -110,8 +122,11 @@ body {
   }
 
   #misc {
-    .category__name,
-    .category__toggle-form-btn {
+    .category__triangle::after {
+      border-top-color: $red;
+    }
+
+    .category__name {
       background: $red;
     }
 
@@ -131,13 +146,29 @@ body {
     position: relative;
   }
 
+  &__triangle {
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, 50px);
+      z-index: 2;
+      width: 0;
+      height: 0;
+      border-bottom: 20px solid transparent;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-top: 30px solid;
+    }
+  }
+
   &__toggle-form-btn {
     position: absolute;
-    padding: 1rem 2rem;
-    bottom: -20px;
+    bottom: 0px;
     left: 50%;
     transform: translate(-50%, 20px);
-    z-index: 2;
+    z-index: 3;
   }
 
   &__drawer {

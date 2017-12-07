@@ -59,7 +59,7 @@ function setUpUI() {
     // create item
     var node = document.createElement('li');
     var content = `
-      <h3 class="category__name">
+      <h3 class="category__name category__triangle">
         ${category.name}
         <i class="category__toggle-form-btn hide">+</i>
       </h3>

@@ -1,0 +1,14 @@
+@mixin triangle($color) {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50px);
+  z-index: 2;
+  width: 0;
+  height: 0;
+  border-top: 30px solid #{$color};
+  border-bottom: 20px solid transparent;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+}
