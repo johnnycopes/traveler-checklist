@@ -1,4 +1,3 @@
-// IDEA: save categories' elements in an object on creation that can later be referenced
 // TODO: make triangles on categories
 // TODO: scroll to top of category when clicked
 // TODO: set min-height of list to be screen height when opened
@@ -65,7 +64,7 @@ function setUpUI() {
         <i class="category__toggle-form-btn hide">+</i>
       </h3>
       <div class="category__drawer">
-        <form class="category__add-item-form hide">
+        <form class="category__add-item-form">
           <input class="category__add-item-input" type="text" placeholder="item name" />
           <button class="category__add-item-btn" type="submit">add</button>
         </form>
@@ -90,13 +89,14 @@ function setUpUI() {
     var addItemInput = document.querySelector(`#${category} .category__add-item-input`);
 
     name.addEventListener('click', function() {
-      _toggleElement(drawer);
+      _toggleDrawer(drawer);
       toggleFormBtn.classList.toggle('hide');
     });
     toggleFormBtn.addEventListener('click', function(event) {
       event.stopPropagation();
-      addItemForm.classList.toggle('hide');
+      addItemForm.classList.toggle('reveal-form');
       list.classList.toggle('blur');
+      addItemInput.focus();
     });
     addItemForm.addEventListener('submit', function(event) {
       event.preventDefault();
@@ -109,13 +109,32 @@ function setUpUI() {
     });
   }
 
-  function _toggleElement(element) {
-    element.classList.toggle('open');
-    if (element.style.maxHeight) {
-      element.style.maxHeight = null;
+  function _toggleDrawer(drawer) {
+    drawer.classList.toggle('open');
+
+
+    // console.log(window.scrollY);
+    // console.log(drawer.getBoundingClientRect());
+    // console.log(name);
+    // var drawerHeight = window.innerHeight - name.scrollHeight - header.scrollHeight;
+    // if (drawer.classList.contains('open')) {
+    //   var drawerPosition = drawer.getBoundingClientRect().top;
+    //   window.scrollTo(100, 100);
+    // }
+    if (drawer.style.maxHeight) {
+      drawer.style.maxHeight = null;
     } 
     else {
-      element.style.maxHeight = `${element.scrollHeight}px`;
+      drawer.style.maxHeight = `${drawer.scrollHeight}px`;
+      // setTimeout(function() {
+      //   var name = drawer.previousElementSibling;
+      //   var namePosition = name.getBoundingClientRect().top - header.scrollHeight;
+      //   window.scroll({
+      //     top: namePosition,
+      //     left: 0,
+      //     behavior: 'smooth'
+      //   });
+      // }, 300);
     }
   }
 
