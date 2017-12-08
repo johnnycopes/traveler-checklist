@@ -1,3 +1,5 @@
+@import 'mixins';
+
 $gold: #FFCA28;
 $cyan: #8FE5F7;
 $green: #8BC34A;
@@ -36,7 +38,7 @@ body {
   left: 0;
   width: 100%;
   height: 60px;
-  z-index: 4;
+  z-index: 3;
   background: $white;
   font-weight: 700;
   font-size: 1.5rem;
@@ -66,73 +68,23 @@ body {
   flex-direction: column;
 
   #documents {
-    .category__triangle::after {
-      border-top-color: $gold;
-    }
-
-    .category__name {
-      background: $gold;
-    }
-
-    .category__add-item-form::before {
-      background: lighten($gold, 20%);
-    }
+    @include category($gold, 5%);
   }
 
   #clothing {
-    .category__triangle::after {
-      border-top-color: $cyan;
-    }
-
-    .category__name {
-      background: $cyan;
-    }
-
-    .category__add-item-form::before {
-      background: lighten($cyan, 15%);
-    }
+    @include category($cyan, 10%)
   }
 
   #toiletries {
-    .category__triangle::after {
-      border-top-color: $green;
-    }
-
-    .category__name {
-      background: $green;
-    }
-
-    .category__add-item-form::before {
-      background: lighten($green, 30%);
-    }
+    @include category($green, 10%);
   }
 
   #electronics {
-    .category__triangle::after {
-      border-top-color: $beige;
-    }
-
-    .category__name {
-      background: $beige;
-    }
-
-    .category__add-item-form::before {
-      background: lighten($beige, 8%);
-    }
+    @include category($beige, 20%);
   }
 
   #misc {
-    .category__triangle::after {
-      border-top-color: $red;
-    }
-
-    .category__name {
-      background: $red;
-    }
-
-    .category__add-item-form::before {
-      background: lighten($red, 20%);
-    }
+    @include category($red, 5%);
   }
 }
 
@@ -146,42 +98,43 @@ body {
     position: relative;
   }
 
+  &__toggle-form-btn {
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translate(-50%, 20px);
+    z-index: 2;
+  }
+
+  &__drawer {
+    position: relative;
+    max-height: 0;
+    transition: 300ms all ease-in;
+    background: $white;
+    overflow: hidden;
+  }
+
   &__triangle {
     &::after {
       content: "";
       position: absolute;
-      bottom: 0;
+      top: 0;
       left: 50%;
-      transform: translate(-50%, 50px);
-      z-index: 2;
+      z-index: 1;
+      transform: translateX(-50%);
       width: 0;
       height: 0;
       border-bottom: 20px solid transparent;
       border-left: 20px solid transparent;
       border-right: 20px solid transparent;
       border-top: 30px solid;
+      transition: 100ms all ease-in;
     }
   }
 
-  &__toggle-form-btn {
-    position: absolute;
-    bottom: 0px;
-    left: 50%;
-    transform: translate(-50%, 20px);
-    z-index: 3;
-  }
-
-  &__drawer {
-    position: relative;
-    overflow: hidden;
-    max-height: 0;
-    transition: 200ms all ease-in;
-    background: $white;
-    overflow: auto;
-  }
-
   &__list {
-    padding: 3rem;
+    padding: 5rem 2rem;
+    overflow: hidden;
     transition: 100ms 50ms filter ease-in;
   }
 
@@ -223,7 +176,7 @@ body {
 
   &__add-item-btn {
     border: none;
-    margin: 0 auto;
+    margin: 0 auto 5rem;
     padding: 1rem 2rem;
     width: 40%;
     font-size: 2rem;
@@ -267,11 +220,6 @@ body {
   display: none;
 }
 
-// .category__drawer--closed {
-//   max-height: 0 !important;
-//   min-height: 0 !important;
-// }
-
 .category__add-item-form--hidden {
   transform: scale(0);
   opacity: 0;
@@ -279,6 +227,14 @@ body {
 
 .blur {
   filter: blur(2px);
+}
+
+.no-scroll {
+  overflow: hidden !important;
+}
+
+.no-triangle::after {
+  display: none;
 }
 
 @media screen and (min-width: 480px) {

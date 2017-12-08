@@ -2,8 +2,8 @@
 // JS
 // =============
 
-require('./js/app.js');
-// import "./app";
+// require('./js/app.js');
+import "./js/main";
 
 
 // =============
