@@ -92,7 +92,7 @@ export function setUpUI() {
         name: addItemInput.value,
         category
       };
-      App.createItemAndAddToList(item);
+      travellistApp.createItemAndAddToList(item);
       addItemInput.value = '';
     });
   }
@@ -117,7 +117,7 @@ export function setUpUI() {
 
   function _notifyCounter() {
     var itemCheckbox = this.children[0];
-    App.updateCounter(itemCheckbox.checked);
+    travellistApp.updateCounter(itemCheckbox.checked);
   }
 
   function refreshCounter(counter) {

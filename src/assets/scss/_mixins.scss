@@ -1,0 +1,22 @@
+@mixin category($color, $darken-percentage, $lighten-percentage) {
+  .category__name {
+    background: $color;
+  }
+
+  .category__name--selected,
+  .category__triangle::after {
+    background: darken($color, $darken-percentage);
+  }
+
+  .category__add-item-form::before {
+    background: lighten($color, $lighten-percentage);
+  }
+
+  .category__add-item-input {
+    outline: none;
+
+    &:focus {
+      border: 3px solid darken($color, $darken-percentage);
+    }
+  }
+}

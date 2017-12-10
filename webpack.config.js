@@ -30,6 +30,12 @@ let config = {
           use: ['css-loader', 'sass-loader'],
               
         })),
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/, // for other file types
+        use: [
+          'file-loader?name=[name].[ext]&outputPath=assets/'
+        ]
       }
     ] // end rules
   },
