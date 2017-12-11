@@ -111,7 +111,7 @@ body {
     position: absolute;
     bottom: 0px;
     left: 50%;
-    transform: translate(-50%, 25px);
+    transform: translate(-50%, 20px);
     width: 25px;
   }
 
@@ -195,6 +195,7 @@ body {
 .item {
   text-align: center;
   position: relative;
+  overflow: hidden;
 
   &:first-child {
     margin-top: 4rem;
@@ -205,12 +206,20 @@ body {
   }
 
   &__name {
-    display: block;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-size: 2rem;
     margin-bottom: 0.5rem;
     padding: 1rem;
     border-radius: $border-radius;
     word-break: break-all;
+    cursor: pointer;
+
+    &::before {
+      content: "";
+      width: 25px;
+    }
   }
 
   &__checkbox {
@@ -225,6 +234,15 @@ body {
     color: $gray;
   }
 
+  &__delete-btn {
+    height: 100%;
+    opacity: 0;
+    width: 25px;
+  }
+
+  &:hover :hover .item__delete-btn {
+    opacity: 1;
+  }
 }
 
 

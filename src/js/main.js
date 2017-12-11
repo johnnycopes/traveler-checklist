@@ -1,4 +1,3 @@
-// TODO: make triangles on categories
 // TODO: scroll to top of category when clicked
 // TODO: add drag and drop rearrangement
 // TODO: let header height be auto and adjust height in javascript
@@ -130,7 +129,10 @@ function setUpUI() {
     var checkedAttr = item.completed ? 'checked' : '';
     var content = `
       <input class="item__checkbox" type="checkbox" id="${item.uniqueID}" ${checkedAttr} />
-      <label class="item__name" for="${item.uniqueID}">${item.name}</label>
+      <label class="item__name" for="${item.uniqueID}">
+        <span>${item.name}</span>
+        <img class="item__delete-btn" src="assets/delete.svg" />
+      </label>
     `;
     node.classList.add('item');
     node.innerHTML = content;
@@ -139,7 +141,12 @@ function setUpUI() {
     var drawer = document.querySelector(`#${item.category} .category__drawer`);
     var list = document.querySelector(`#${item.category} .category__list`);
     list.prepend(node);
-    node.addEventListener('change', _notifyCounter);    
+    node.addEventListener('change', _notifyCounter);
+    
+    var deleteBtn = document.querySelector(`#${item.category} .item__delete-btn`);
+    deleteBtn.addEventListener('click', function() {
+      alert('this will be deleted');
+    });
   }
 
   function _notifyCounter() {

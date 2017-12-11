@@ -235,18 +235,25 @@ body {
 
 .item {
   text-align: center;
-  position: relative; }
+  position: relative;
+  overflow: hidden; }
   .item:first-child {
     margin-top: 4rem; }
   .item:last-child {
     margin-bottom: 4rem; }
   .item__name {
-    display: block;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-size: 2rem;
     margin-bottom: 0.5rem;
     padding: 1rem;
     border-radius: 3px;
-    word-break: break-all; }
+    word-break: break-all;
+    cursor: pointer; }
+    .item__name::before {
+      content: "";
+      width: 25px; }
   .item__checkbox {
     visibility: hidden;
     opacity: 0;
@@ -255,6 +262,12 @@ body {
   .item__checkbox:checked ~ .item__name {
     background: #C4C4C48C;
     color: gray; }
+  .item__delete-btn {
+    height: 100%;
+    opacity: 0;
+    width: 25px; }
+  .item:hover :hover .item__delete-btn {
+    opacity: 1; }
 
 .hide {
   display: none; }

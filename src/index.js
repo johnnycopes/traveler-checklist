@@ -21,6 +21,7 @@ require('./assets/scss/main.scss');
 import './assets/icons/add.svg';
 import './assets/icons/bag.svg';
 import './assets/icons/camera.svg';
+import './assets/icons/delete.svg';
 import './assets/icons/documents.svg';
 import './assets/icons/earphones.svg';
 import './assets/icons/luggage.svg';
