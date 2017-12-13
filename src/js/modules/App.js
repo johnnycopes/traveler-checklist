@@ -1,4 +1,4 @@
-export function setUpApp(UI) {
+export default function setUpApp(UI) {
   var categories = [
     {
       name: 'documents',

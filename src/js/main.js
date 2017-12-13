@@ -1,7 +1,10 @@
 // TODO: scroll to top of category when clicked
 // TODO: add drag and drop rearrangement
+// TODO: update completed field in app data when toggled
 // TODO: let header height be auto and adjust height in javascript
 // TODO: extract all height adjustment logic into a separate module
+
+
 
 var helpers = {
   generateUniqueID: function uuidv4() {
@@ -12,16 +15,15 @@ var helpers = {
 };
 
 var UI = setUpUI();
-UI.init();
-
 var App = setUpApp(UI);
+
+UI.init();
 App.init();
 
 // ****************************************
 // ****************************************
 
 function setUpUI() {
-  var body;
   var header;
   var counterChecked;
   var counterTotal;
@@ -42,7 +44,6 @@ function setUpUI() {
   // ********************
 
   function initUI() {
-    body = document.querySelector('body');
     header = document.querySelector('.header');
     counterChecked = document.querySelector('.counter__checked');
     counterTotal = document.querySelector('.counter__total');
@@ -145,7 +146,8 @@ function setUpUI() {
     
     var deleteBtn = document.querySelector(`#${item.category} .item__delete-btn`);
     deleteBtn.addEventListener('click', function() {
-      alert('this will be deleted');
+      App.deleteItemAndRemoveFromList(item);
+      node.parentNode.removeChild(node);
     });
   }
 
@@ -176,13 +178,11 @@ function setUpUI() {
     // save the open/close state of the clicked drawer before closing all drawers
     var drawerIsClosed = !clickedDrawer.style.maxHeight;
     
-    body.classList.remove('no-scroll');
     categoryDrawers.forEach(drawer => {
       drawer.style.maxHeight = null;
     });
 
     if (drawerIsClosed) {
-      body.classList.add('no-scroll');
       clickedDrawer.style.maxHeight = `${clickedDrawer.scrollHeight}px`;
       
       // scroll to clicked category
@@ -390,6 +390,7 @@ function setUpApp(UI) {
   var publicAPI = {
     init: initApp,
     createItemAndAddToList,
+    deleteItemAndRemoveFromList,
     updateCounter
   };
 
@@ -419,6 +420,14 @@ function setUpApp(UI) {
     };
     listItems.unshift(item);
     UI.createItemAndAddToList(item);
+    updateCounter();
+  }
+
+  function deleteItemAndRemoveFromList(item) {
+    var itemIndex = listItems.findIndex(listItem => {
+      return listItem === item;
+    });
+    listItems.splice(itemIndex, 1);
     updateCounter();
   }
 

@@ -1,4 +1,4 @@
-export function setUpUI() {
+export default function setUpUI() {
   var body;
   var header;
   var counterChecked;
@@ -19,7 +19,8 @@ export function setUpUI() {
 
   // ********************
 
-  function initUI() {
+  function initUI(App) {
+    var App = App;
     body = document.querySelector('body');
     header = document.querySelector('.header');
     counterChecked = document.querySelector('.counter__checked');
@@ -92,7 +93,7 @@ export function setUpUI() {
         name: addItemInput.value,
         category
       };
-      travellistApp.createItemAndAddToList(item);
+      App.createItemAndAddToList(item);
       addItemInput.value = '';
     });
   }
@@ -117,7 +118,7 @@ export function setUpUI() {
 
   function _notifyCounter() {
     var itemCheckbox = this.children[0];
-    travellistApp.updateCounter(itemCheckbox.checked);
+    App.updateCounter(itemCheckbox.checked);
   }
 
   function refreshCounter(counter) {
