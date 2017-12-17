@@ -13,6 +13,12 @@ let config = {
   module: {
     rules: [
       {
+        enforce: 'pre', // this loader is included separately to insure that it gets run before other JS loaders (e.g. Babel)
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader'
+      },
+      {
         test: /\.js$/, // files ending with .js
         exclude: /node_modules/, // exclude the node modules directory
         use: {
@@ -24,18 +30,16 @@ let config = {
       },
       {
         test: /\.scss$/, // files ending with .scss
-        use: ['css-hot-loader'].concat(ExtractTextWebpackPlugin.extract({
-        
-          fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader'],
-              
-        })),
+        use: ['css-hot-loader'].concat(
+          ExtractTextWebpackPlugin.extract({
+            fallback: 'style-loader',
+            use: ['css-loader', 'sass-loader']
+          })
+        )
       },
       {
         test: /\.(png|svg|jpg|gif)$/, // for other file types
-        use: [
-          'file-loader?name=[name].[ext]&outputPath=assets/'
-        ]
+        use: ['file-loader?name=[name].[ext]&outputPath=assets/']
       }
     ] // end rules
   },
@@ -48,7 +52,7 @@ let config = {
     inline: true,
     open: true // open default browser on launch
   },
-  devtool: 'eval-source-map' // for choosing a style of source map 
+  devtool: 'eval-source-map' // for choosing a style of source map
 };
 
 module.exports = config;

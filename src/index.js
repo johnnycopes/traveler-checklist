@@ -3,8 +3,7 @@
 // =============
 
 // require('./js/app.js');
-import "./js/main";
-
+import './js/main';
 
 // =============
 // SCSS

@@ -1,16 +1,16 @@
 // TODO: scroll to top of category when clicked
 // TODO: add drag and drop rearrangement
-// TODO: update completed field in app data when toggled
 // TODO: let header height be auto and adjust height in javascript
 // TODO: extract all height adjustment logic into a separate module
 
-
-
 var helpers = {
   generateUniqueID: function uuidv4() {
-    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-    )
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+      (
+        c ^
+        (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+      ).toString(16)
+    );
   }
 };
 
@@ -37,8 +37,8 @@ function setUpUI() {
     createCategories,
     createItemAndAddToList,
     refreshCounter
-  }
-  
+  };
+
   return publicAPI;
 
   // ********************
@@ -69,7 +69,9 @@ function setUpUI() {
     var node = document.createElement('li');
     var content = `
       <h3 class="category__name">
-        <img class="category__icon" src="assets/${category.icon}.svg" alt="${category.icon}" />
+        <img class="category__icon" src="assets/${category.icon}.svg" alt="${
+      category.icon
+    }" />
         <span class="category__name-wrapper">${category.name}</span>
         <img class="category__toggle-form-btn hide" src="assets/add.svg" alt="add" />
       </h3>
@@ -94,9 +96,15 @@ function setUpUI() {
     var name = document.querySelector(`#${category} .category__name`);
     var drawer = document.querySelector(`#${category} .category__drawer`);
     var list = document.querySelector(`#${category} .category__list`);
-    var toggleFormBtn = document.querySelector(`#${category} .category__toggle-form-btn`);
-    var addItemForm = document.querySelector(`#${category} .category__add-item-form`);
-    var addItemInput = document.querySelector(`#${category} .category__add-item-input`);
+    var toggleFormBtn = document.querySelector(
+      `#${category} .category__toggle-form-btn`
+    );
+    var addItemForm = document.querySelector(
+      `#${category} .category__add-item-form`
+    );
+    var addItemInput = document.querySelector(
+      `#${category} .category__add-item-input`
+    );
 
     name.addEventListener('click', function() {
       _toggleDrawer(drawer);
@@ -129,8 +137,10 @@ function setUpUI() {
     var node = document.createElement('li');
     var checkedAttr = item.completed ? 'checked' : '';
     var content = `
-      <input class="item__checkbox" type="checkbox" id="${item.uniqueID}" ${checkedAttr} />
-      <label class="item__name" for="${item.uniqueID}">
+      <input class="item__checkbox" type="checkbox" id="_${
+        item.uniqueID
+      }" ${checkedAttr} />
+      <label class="item__name" for="_${item.uniqueID}">
         <span>${item.name}</span>
         <img class="item__delete-btn" src="assets/delete.svg" />
       </label>
@@ -139,25 +149,25 @@ function setUpUI() {
     node.innerHTML = content;
 
     // add to list and attach event handlers
-    var drawer = document.querySelector(`#${item.category} .category__drawer`);
     var list = document.querySelector(`#${item.category} .category__list`);
     list.prepend(node);
-    node.addEventListener('change', _notifyCounter);
-    
-    var deleteBtn = document.querySelector(`#${item.category} .item__delete-btn`);
+    var listItem = document.querySelector(`#_${item.uniqueID}`);
+    listItem.addEventListener('change', function() {
+      App.toggleItemComplete(item);
+      App.updateCounter();
+    });
+
+    var deleteBtn = document.querySelector(
+      `#${item.category} .item__delete-btn`
+    );
     deleteBtn.addEventListener('click', function() {
       App.deleteItemAndRemoveFromList(item);
       node.parentNode.removeChild(node);
     });
   }
 
-  function _notifyCounter() {
-    var itemCheckbox = this.children[0];
-    App.updateCounter(itemCheckbox.checked);
-  }
-
   function refreshCounter(counter) {
-    counterChecked.innerText = counter.checked;
+    counterChecked.innerText = counter.completed;
     counterTotal.innerText = counter.total;
   }
 
@@ -177,18 +187,19 @@ function setUpUI() {
   function _toggleDrawer(clickedDrawer) {
     // save the open/close state of the clicked drawer before closing all drawers
     var drawerIsClosed = !clickedDrawer.style.maxHeight;
-    
+
     categoryDrawers.forEach(drawer => {
       drawer.style.maxHeight = null;
     });
 
     if (drawerIsClosed) {
       clickedDrawer.style.maxHeight = `${clickedDrawer.scrollHeight}px`;
-      
+
       // scroll to clicked category
       setTimeout(function() {
         var name = clickedDrawer.previousElementSibling;
-        var namePosition = name.getBoundingClientRect().top - header.scrollHeight;
+        var namePosition =
+          name.getBoundingClientRect().top - header.scrollHeight;
         window.scroll({
           top: namePosition,
           left: 0,
@@ -281,7 +292,7 @@ function setUpApp(UI) {
     },
     {
       uniqueID: 9,
-      name: 'driver\'s license',
+      name: "driver's license",
       category: 'documents',
       completed: true
     },
@@ -383,7 +394,7 @@ function setUpApp(UI) {
     }
   ];
   var counter = {
-    checked: 0,
+    completed: 0,
     total: listItems.length
   };
 
@@ -391,6 +402,7 @@ function setUpApp(UI) {
     init: initApp,
     createItemAndAddToList,
     deleteItemAndRemoveFromList,
+    toggleItemComplete,
     updateCounter
   };
 
@@ -402,24 +414,21 @@ function setUpApp(UI) {
     UI.createCategories(categories);
 
     listItems.forEach(item => {
-      if (item.completed) {
-        counter.checked++;
-      }
       UI.createItemAndAddToList(item);
     });
 
-    UI.refreshCounter(counter);
+    updateCounter();
   }
 
   function createItemAndAddToList(item) {
-    var item = {
+    var newItem = {
       uniqueID: helpers.generateUniqueID(),
       name: item.name,
       category: item.category,
       completed: false
     };
-    listItems.unshift(item);
-    UI.createItemAndAddToList(item);
+    listItems.unshift(newItem);
+    UI.createItemAndAddToList(newItem);
     updateCounter();
   }
 
@@ -431,13 +440,19 @@ function setUpApp(UI) {
     updateCounter();
   }
 
-  function updateCounter(checkboxValue) {
-    if (arguments.length > 0) {
-      checkboxValue ? counter.checked++ : counter.checked--;
-    }
-    if (counter.total !== listItems.length) {
-      counter.total = listItems.length;
-    }
+  function toggleItemComplete(item) {
+    item.completed = !item.completed;
+    updateCounter();
+  }
+
+  function updateCounter() {
+    counter.completed = 0;
+    listItems.forEach(item => {
+      if (item.completed) {
+        counter.completed++;
+      }
+    });
+    counter.total = listItems.length;
     UI.refreshCounter(counter);
   }
 }

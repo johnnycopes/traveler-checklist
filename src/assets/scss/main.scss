@@ -1,14 +1,14 @@
 @import 'mixins';
 
-$gold: #FFCA28;
-$cyan: #8FE5F7;
-$green: #8BC34A;
-$beige: #FFF9C5;
-$red: #FF825C;
-$lightgray: #C4C4C48C;
+$gold: #ffca28;
+$cyan: #8fe5f7;
+$green: #8bc34a;
+$beige: #fff9c5;
+$red: #ff825c;
+$lightgray: #c4c4c48c;
 $gray: #777;
-$white: #FFF;
-$black: rgba(0,0,0,0.87);
+$white: #fff;
+$black: rgba(0, 0, 0, 0.87);
 
 $border-radius: 3px;
 $box-shadow: 0px 1px 1px -1px $black;
@@ -32,14 +32,14 @@ body {
 
 .app {
   margin: 0 auto;
-  max-width: 960px;
+  max-width: 768px;
 }
 
 .header {
   position: fixed;
   top: 0;
   width: 100%;
-  max-width: 960px;
+  max-width: 768px;
   height: 60px;
   z-index: 3;
   background: $white;
@@ -75,7 +75,7 @@ body {
   }
 
   #clothing {
-    @include category($cyan, 10%, 5%)
+    @include category($cyan, 10%, 5%);
   }
 
   #toiletries {
@@ -128,7 +128,7 @@ body {
 
   &__triangle {
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       top: 0;
       left: 50%;
@@ -164,7 +164,7 @@ body {
     opacity: 1;
 
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       top: 0;
       left: 0;
@@ -228,7 +228,7 @@ body {
     cursor: pointer;
 
     &::before {
-      content: "";
+      content: '';
       width: 25px;
     }
   }
@@ -256,7 +256,6 @@ body {
   }
 }
 
-
 // utility
 
 .hide {
@@ -276,9 +275,7 @@ body {
 }
 
 @media screen and (min-width: 480px) {
-
   body {
     grid-template-columns: 15% 1fr 15%;
-  }  
-
+  }
 }
