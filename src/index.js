@@ -2,7 +2,6 @@
 // JS
 // =============
 
-// require('./js/app.js');
 import './js/main';
 
 // =============

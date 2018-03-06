@@ -13,20 +13,9 @@ let config = {
   module: {
     rules: [
       {
-        enforce: 'pre', // this loader is included separately to insure that it gets run before other JS loaders (e.g. Babel)
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'eslint-loader'
-      },
-      {
-        test: /\.js$/, // files ending with .js
+        test: /\.ts$/, // files ending with .ts
         exclude: /node_modules/, // exclude the node modules directory
-        use: {
-          loader: 'babel-loader', // use this loader
-          options: {
-            presets: ['env']
-          }
-        }
+        use: 'ts-loader'
       },
       {
         test: /\.scss$/, // files ending with .scss
