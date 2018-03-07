@@ -9,8 +9,8 @@ import { IListItem } from "../interfaces/list-item.interface";
 export class UI implements IUI {
 	private window: Window = window;
 	private header: HTMLElement = <HTMLElement>document.querySelector('.header');
-	private counterChecked: HTMLElement = <HTMLElement>document.querySelector('.counter__checked');
-	private counterTotal: HTMLElement = <HTMLElement>document.querySelector('.counter__total');
+	private counterChecked: HTMLElement = <HTMLElement>document.querySelector('.header__counter-checked');
+	private counterTotal: HTMLElement = <HTMLElement>document.querySelector('.header__counter-total');
 	private categoriesList: HTMLElement = <HTMLElement>document.querySelector('.categories-list');
 	private categoryNames: NodeListOf<HTMLElement>;
 	private categoryDrawers: NodeListOf<HTMLElement>;

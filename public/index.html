@@ -12,12 +12,17 @@
 <body>
 	<main class="app">
 		<div class="header">
-			<div class="header__controls">
-				<i class="fa fa-bars"></i>
-				<div class="header__progress-bar">===============</div>
-				<div class="counter">
-					<span class="counter__checked"></span> /
-					<span class="counter__total"></span>
+			<div class="header__container">
+				<i class="header__menu fa fa-bars"></i>
+				<progress class="header__progress-bar"
+					value="2"
+					max="26">
+					<!-- TODO: make these values controlled by TS -->
+				</progress>
+				<div class="header__counter">
+					<span class="header__counter-checked"></span> 
+					<span class="header__counter-dash">/</span>
+					<span class="header__counter-total"></span>
 				</div>
 			</div>
 			<div class="header__list-name">Travel Essentials</div>

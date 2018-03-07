@@ -1,0 +1,21 @@
+$gold: #ffca28;
+$cyan: #8fe5f7;
+$green: #8bc34a;
+$beige: #fff9c5;
+$red: #ff825c;
+$lightgray: #c4c4c48c;
+$gray: #777;
+$white: #fff;
+$black: rgba(0, 0, 0, 0.87);
+
+$border-radius: 3px;
+$box-shadow: 0px 1px 1px -1px $black;
+
+$z-index: (
+	header: 			 500,
+	category: 		 400,
+	triangle: 		 300,
+	add-item-form: 300,
+	positive:				 1,
+	negative:				-1
+);
