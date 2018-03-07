@@ -6,6 +6,7 @@ export interface IApp {
 	counter: ICounter;
 	categories: ICategory[];
 	listItems: IListItem[];
+	init(): void;
 	addListItem(item: IListItem): void;
 	deleteListItem(item: IListItem): void;
 	toggleListItemComplete(item: IListItem): void;

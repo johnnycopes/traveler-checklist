@@ -16,6 +16,10 @@ export class App implements IApp {
 		total: this.listItems.length
 	}
 
+	init(): void {
+		this.updateCounter();
+	}
+
 	addListItem(listItem: IListItem) {
 		this.listItems.unshift(listItem);
 		this.updateCounter();

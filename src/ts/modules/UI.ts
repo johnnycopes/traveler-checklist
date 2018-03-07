@@ -21,6 +21,7 @@ export class UI implements IUI {
 	init(): void {
 		this.createCategories(this.app.categories);
 		this.createListItems(this.app.listItems);
+		this.updateCounter(this.app.counter);
 	}
 
 
@@ -125,7 +126,7 @@ export class UI implements IUI {
 		});
 		addItemForm.addEventListener('submit', (event) => {
 			event.preventDefault();
-			const uniqueID: number = Math.floor(Math.random() * 1000); // TODO: replace with random number fn
+			const uniqueID: string = Helpers.generateUniqueID();
 			const item: IListItem = {
 				uniqueID,
 				name: addItemInput.value,

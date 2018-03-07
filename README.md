@@ -1,9 +1,12 @@
 # Traveler Checklist
 
-A project written with HTML, SCSS, and vanilla JS. Goals of this project:
+### Live demo: https://travellist.surge.sh/
 
-- Write all JS using the module pattern
+A checklist used to help me pack for my work trips made with HTML, SCSS, and TypeScript.
+
+Goals of this project include:
+
+- Write everything in TS without any sort of framework
 - Set up Webpack from scratch to better understand how it works
-- Make an interesting layout using CSS Grid
-- Try out some new CSS level 4 features
+- Make an interesting layout that feels like that of an app, not a website
 - Produce a clean, cool-looking app with nice assets

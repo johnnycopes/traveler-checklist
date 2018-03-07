@@ -1,5 +1,5 @@
 export interface IListItem {
-	uniqueID: number;
+	uniqueID: string;
 	name: string;
 	category: string;
 	completed: boolean;

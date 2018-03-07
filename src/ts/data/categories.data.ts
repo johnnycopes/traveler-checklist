@@ -3,22 +3,22 @@ import { ICategory } from './../interfaces/category.interface';
 export const CATEGORIES: ICategory[] = [
 	{
 		name: 'documents',
-		icon: ''
+		icon: 'documents'
 	},
 	{
 		name: 'clothing',
-		icon: ''
+		icon: 'shorts'
 	},
 	{
 		name: 'toiletries',
-		icon: ''
+		icon: 'toothbrush'
 	},
 	{
 		name: 'electronics',
-		icon: ''
+		icon: 'camera'
 	},
 	{
 		name: 'misc',
-		icon: ''
+		icon: 'bag'
 	}
 ];
