@@ -1,6 +1,6 @@
-import { Category } from './category.interface';
+import { ICategory } from './../interfaces/category.interface';
 
-export const CATEGORIES: Category[] = [
+export const CATEGORIES: ICategory[] = [
 	{
 		name: 'documents',
 		icon: ''

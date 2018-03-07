@@ -2,15 +2,16 @@
 // JS
 // =============
 
-import './js/main';
+import './ts/main.ts';
+
 
 // =============
 // SCSS
 // =============
 
-require('./assets/scss/reset.scss');
-require('./assets/scss/main.scss');
-// import "../scss/main.scss";
+import './scss/reset.scss';
+import './scss/main.scss';
+
 
 // =============
 // ASSETS

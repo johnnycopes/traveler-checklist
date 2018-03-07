@@ -11,7 +11,10 @@ import { LIST_ITEMS } from "./../data/list-items.data";
 export class App implements IApp {
 	public categories: ICategory[] = CATEGORIES;
 	public listItems: IListItem[] = LIST_ITEMS;
-	public counter: ICounter;
+	public counter: ICounter = {
+		completed: 0,
+		total: this.listItems.length
+	}
 
 	addListItem(listItem: IListItem) {
 		this.listItems.unshift(listItem);

@@ -1,6 +1,6 @@
-import { ListItem } from './list-item.interface';
+import { IListItem } from '../interfaces/list-item.interface';
 
-export let LIST_ITEMS: ListItem[]  = [
+export let LIST_ITEMS: IListItem[]  = [
 	{
 		uniqueID: 0,
 		name: 'fake item',

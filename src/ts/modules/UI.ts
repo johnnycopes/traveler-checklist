@@ -7,6 +7,7 @@ import { ICategory } from "../interfaces/category.interface";
 import { IListItem } from "../interfaces/list-item.interface";
 
 export class UI implements IUI {
+	private window: Window = window;
 	private header: HTMLElement = <HTMLElement>document.querySelector('.header');
 	private counterChecked: HTMLElement = <HTMLElement>document.querySelector('.counter__checked');
 	private counterTotal: HTMLElement = <HTMLElement>document.querySelector('.counter__total');
@@ -18,7 +19,7 @@ export class UI implements IUI {
 	constructor(private app: IApp) { }
 
 	init(): void {
-		this.createCategoriesList(this.app.categories);
+		this.createCategories(this.app.categories);
 		this.createListItems(this.app.listItems);
 	}
 
@@ -33,9 +34,9 @@ export class UI implements IUI {
 
 	// CATEGORIES
 
-	private createCategoriesList(categories: ICategory[]): void {
+	private createCategories(categories: ICategory[]): void {
 		categories.forEach((category: ICategory) => {
-			this.createCategoryAndAddToList(category);
+			this.createCategory(category);
 			this.attachCategoryEventListeners(category);
 		});
 
@@ -46,10 +47,12 @@ export class UI implements IUI {
 
 		// set category heights and attach global event listener for readjustment on viewport change
 		this.setCategoryHeights();
-		window.addEventListener('resize', this.setCategoryHeights);
+		this.window.addEventListener('resize', () => {
+			this.setCategoryHeights();
+		});
 	}
 
-	private createCategoryAndAddToList(category: ICategory): void {
+	private createCategory(category: ICategory): void {
 		let node: HTMLElement = document.createElement('li');
 		const content: string = `
       <h3 class="category__name">
@@ -106,7 +109,7 @@ export class UI implements IUI {
 		);
 
 		name.addEventListener('click', () => {
-			toggleDrawer(drawer);
+			this.toggleDrawer(drawer);
 			addItemForm.classList.remove('category__add-item-form--hidden');
 			name.classList.toggle('category__name--selected');
 			drawer.classList.toggle('no-triangle');
@@ -131,40 +134,15 @@ export class UI implements IUI {
 			};
 			addItemInput.value = '';
 
-			// update data and counter
+			this.createListItem(item);
+			this.attachListItemEventListeners(item);
 			this.app.addListItem(item);
 			this.updateCounter(this.app.counter);
 		});
-
-		function toggleDrawer(clickedDrawer: HTMLElement) {
-			// save the open/close state of the clicked drawer before closing all drawers
-			const drawerIsClosed: boolean = !!clickedDrawer.style.maxHeight;
-
-			this.categoryDrawers.forEach((drawer: HTMLElement) => {
-				drawer.style.maxHeight = null;
-			});
-
-			if (drawerIsClosed) {
-				clickedDrawer.style.maxHeight = `${clickedDrawer.scrollHeight}px`;
-
-				// scroll to clicked category
-				setTimeout(function () {
-					const name = clickedDrawer.previousElementSibling;
-					if (name) {
-						const namePosition = name.getBoundingClientRect().top - this.header.scrollHeight;
-						window.scroll({
-							top: namePosition,
-							left: 0,
-							behavior: 'smooth'
-						});
-					}
-				}, 400);
-			}
-		}	
 	}
 
 	private setCategoryHeights(): void {
-		const categoriesListHeight: number = window.innerHeight - this.header.scrollHeight;
+		const categoriesListHeight: number = this.window.innerHeight - this.header.scrollHeight;
 		const categoryNameHeight: number = categoriesListHeight / this.categoryNames.length;
 
 		this.categoryNames.forEach(name => {
@@ -176,17 +154,43 @@ export class UI implements IUI {
 		});
 	}
 
+	private toggleDrawer(clickedDrawer: HTMLElement): void {
+		// save the open/close state of the clicked drawer before closing all drawers
+		const drawerIsClosed: boolean = !clickedDrawer.style.maxHeight;
+
+		this.categoryDrawers.forEach((drawer: HTMLElement) => {
+			drawer.style.maxHeight = null;
+		});
+
+		if (drawerIsClosed) {
+			clickedDrawer.style.maxHeight = `${clickedDrawer.scrollHeight}px`;
+
+			// scroll to clicked category
+			setTimeout(() => {
+				const name = clickedDrawer.previousElementSibling;
+				if (name) {
+					const namePosition = name.getBoundingClientRect().top - this.header.scrollHeight;
+					this.window.scroll({
+						top: namePosition,
+						left: 0,
+						behavior: 'smooth'
+					});
+				}
+			}, 400);
+		}
+	}
+
 
 	// LIST ITEMS
 
 	private createListItems(listItems: IListItem[]): void {
 		listItems.forEach((listItem: IListItem) => {
-			this.createListItemAndAddToList(listItem);
+			this.createListItem(listItem);
 			this.attachListItemEventListeners(listItem);
 		});
 	}
 
-	private createListItemAndAddToList(listItem: IListItem) {
+	private createListItem(listItem: IListItem) {
 		let node: HTMLElement = document.createElement('li');
 		const checkedAttr = listItem.completed ? 'checked' : '';
 		const content = `
@@ -220,15 +224,13 @@ export class UI implements IUI {
 		const listItemDeleteBtn: HTMLElement = <HTMLElement>document.querySelector(`#${listItem.category} .item__delete-btn`);
 
 		listItemElement.addEventListener('change', () => {
-			// update data and counter
 			this.app.toggleListItemComplete(listItem);
 			this.updateCounter(this.app.counter);
 		});
 		
 		listItemDeleteBtn.addEventListener('click', () => {
-			if (listItemElement && listItemElement.parentNode) {
-				listItemElement.parentNode.removeChild(listItemElement);
-				// update data and counter
+			if (listItemElement && listItemElement.parentNode && listItemElement.parentNode.parentNode) {
+				listItemElement.parentNode.parentNode.removeChild(listItemElement.parentNode); // .remove() should work but currently isn't recognized by TS
 				this.app.deleteListItem(listItem);
 				this.updateCounter(this.app.counter);
 			}

@@ -5,7 +5,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssets = require('optimize-css-assets-webpack-plugin');
 
 let config = {
-  entry: './src/index.js',
+  entry: './src/index.ts',
   output: {
     path: path.resolve(__dirname, './public'),
     filename: 'bundle.js'
@@ -31,7 +31,10 @@ let config = {
         use: ['file-loader?name=[name].[ext]&outputPath=assets/']
       }
     ] // end rules
-  },
+	},
+	resolve: {
+		extensions: ['.ts', '.js']
+	},
   plugins: [
     new ExtractTextWebpackPlugin('styles.css') // call the ExtractTextWebpackPlugin and name our CSS file
   ],
