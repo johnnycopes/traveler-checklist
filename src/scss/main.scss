@@ -48,7 +48,21 @@ body {
 	}
 
 	&__progress-bar {
-		flex: 3 0 60%;
+    flex: 3 0 60%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 17px;
+
+    &::-webkit-progress-bar {
+      border: 2px solid $black;
+      padding: 2px;
+      background: $white;
+    }
+
+    &::-webkit-progress-value {
+      background: $red;
+      transition: 100ms all ease-in;
+    }
 	}
 
 	&__counter {

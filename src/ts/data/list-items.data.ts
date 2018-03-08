@@ -11,7 +11,7 @@ export let LIST_ITEMS: IListItem[]  = [
 		uniqueID: '1',
 		name: 'toothbrush',
 		category: 'toiletries',
-		completed: false
+		completed: true
 	},
 	{
 		uniqueID: '2',

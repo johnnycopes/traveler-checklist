@@ -11,6 +11,7 @@ export class UI implements IUI {
 	private header: HTMLElement = <HTMLElement>document.querySelector('.header');
 	private counterChecked: HTMLElement = <HTMLElement>document.querySelector('.header__counter-checked');
 	private counterTotal: HTMLElement = <HTMLElement>document.querySelector('.header__counter-total');
+	private progressBar: HTMLInputElement = <HTMLInputElement>document.querySelector('.header__progress-bar');
 	private categoriesList: HTMLElement = <HTMLElement>document.querySelector('.categories-list');
 	private categoryNames: NodeListOf<HTMLElement>;
 	private categoryDrawers: NodeListOf<HTMLElement>;
@@ -28,6 +29,8 @@ export class UI implements IUI {
 	// COUNTER
 
 	private updateCounter(counter: ICounter): void {
+		this.progressBar.value = counter.completed.toString();
+		this.progressBar.max = counter.total.toString();
 		this.counterChecked.innerText = counter.completed.toString();
 		this.counterTotal.innerText = counter.total.toString();
 	}

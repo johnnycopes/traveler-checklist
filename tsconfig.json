@@ -11,10 +11,4 @@
 			"dom.iterable"
 		]
 	}
-	// "files": [
-	// 	"src/index.ts"
-	// ],
-	// "exclude": [
-	// 	"node_modules"
-	// ]
 }
