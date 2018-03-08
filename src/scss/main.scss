@@ -28,19 +28,18 @@ body {
   top: 0;
   width: 100%;
   max-width: 768px;
-  height: 60px;
+  height: $header-height;
   z-index: map-get($z-index, header);
   background: $white;
   font-weight: 700;
   font-size: 1.5rem;
-	box-shadow: $box-shadow;
 
   &__container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 1rem;
-    height: 40px;
+    height: $header-container-height;
 	}
 	
 	&__menu {
@@ -50,8 +49,7 @@ body {
 	&__progress-bar {
     flex: 3 0 60%;
     -webkit-appearance: none;
-    appearance: none;
-    height: 17px;
+    height: $progress-bar-height;
 
     &::-webkit-progress-bar {
       border: 2px solid $black;
@@ -74,9 +72,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: $lightgray;
+    background: $lighter-gray;
     padding: 0 1rem;
-    height: 20px;
+    height: $header-list-name-height;
   }
 }
 
@@ -256,8 +254,9 @@ body {
   }
 
   &__checkbox:checked ~ .item__name {
-    background: $lightgray;
+    background: $light-gray;
     color: $gray;
+    text-decoration: line-through;
   }
 
   &__delete-btn {
