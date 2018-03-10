@@ -23,6 +23,7 @@ import './assets/icons/camera.svg';
 import './assets/icons/delete.svg';
 import './assets/icons/documents.svg';
 import './assets/icons/earphones.svg';
+import './assets/icons/hamburger-menu.svg';
 import './assets/icons/luggage.svg';
 import './assets/icons/sandals.svg';
 import './assets/icons/shirt.svg';
