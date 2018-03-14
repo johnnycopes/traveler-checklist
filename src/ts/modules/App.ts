@@ -1,12 +1,12 @@
-import { Helpers } from "./Helpers";
+import { Helpers } from './Helpers';
 
 import { IApp } from './../interfaces/app.interface'
-import { ICounter } from "./../interfaces/counter.interface";
-import { ICategory } from "./../interfaces/category.interface";
-import { IListItem } from "./../interfaces/list-item.interface";
+import { ICounter } from './../interfaces/counter.interface';
+import { ICategory } from './../interfaces/category.interface';
+import { IListItem } from './../interfaces/list-item.interface';
 
-import { CATEGORIES } from "./../data/categories.data";
-import { LIST_ITEMS } from "./../data/list-items.data";
+import { CATEGORIES } from './../data/categories.data';
+import { LIST_ITEMS } from './../data/list-items.data';
 
 export class App implements IApp {
 	public categories: ICategory[] = CATEGORIES;

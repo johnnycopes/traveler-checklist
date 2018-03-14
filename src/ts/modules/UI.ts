@@ -1,10 +1,10 @@
-import { Helpers } from "./Helpers";
+import { Helpers } from './Helpers';
 
-import { IApp } from "../interfaces/app.interface";
-import { IUI } from "../interfaces/ui.interface";
-import { ICounter } from "../interfaces/counter.interface";
-import { ICategory } from "../interfaces/category.interface";
-import { IListItem } from "../interfaces/list-item.interface";
+import { IApp } from '../interfaces/app.interface';
+import { IUI } from '../interfaces/ui.interface';
+import { ICounter } from '../interfaces/counter.interface';
+import { ICategory } from '../interfaces/category.interface';
+import { IListItem } from '../interfaces/list-item.interface';
 
 export class UI implements IUI {
 	private window: Window = window;
