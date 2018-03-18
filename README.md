@@ -1,12 +1,20 @@
 # Traveler Checklist
 
-### Live demo: https://travellist.surge.sh/
+### Live site: https://travellist.surge.sh/
 
-A checklist used to help me pack for my work trips made with HTML, SCSS, and TypeScript.
+A checklist used to help me pack for my work trips. Built with HTML, SCSS, and TypeScript.
 
-Goals of this project include:
+#### Goals of this project:
 
 - Write everything in TS with no framework
 - Set up Webpack from scratch to better understand how it works
-- Make an interesting layout that feels like that of an app, not a website
-- Produce a clean, cool-looking app
+- Make an interesting layout that challenges my front-end skills
+
+#### Local installation:
+
+To run this locally on your machine, simply clone the repo and enter the following commands into your CLI:
+
+```
+npm install
+npm run start
+```
