@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack --progress",
     "start": "webpack-dev-server -d --hot --config webpack.config.js --watch",
-    "deploy:mac": "NODE_ENV=production webpack --progress && cd public && surge --domain travellist.surge.sh"
+    "deploy:mac": "NODE_ENV=production webpack --progress && cd public && surge --domain travellist.surge.sh",
+    "deploy:win": "SET NODE_ENV=production && webpack --progress && cd public && surge --domain travellist.surge.sh"
   },
   "author": "John Coppola",
   "license": "ISC",

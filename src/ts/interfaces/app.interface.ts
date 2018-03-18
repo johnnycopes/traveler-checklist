@@ -1,6 +1,6 @@
-import { ICounter } from "./counter.interface";
-import { ICategory } from "./category.interface";
-import { IListItem } from "./list-item.interface";
+import { ICounter } from './counter.interface';
+import { ICategory } from './category.interface';
+import { IListItem } from './list-item.interface';
 
 export interface IApp {
 	counter: ICounter;
